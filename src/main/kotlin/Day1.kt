@@ -13,7 +13,8 @@ class Day1 {
     fun getMaxElfs(text: String, n: Int): Int =
         text.trimIndent()
             .split("\n\n")
-            .map { it.split("\n").map { line -> line.toInt() } }
+            .asSequence()
+            .map { it.lines().map { line -> line.toInt() } }
             .map { elfEntry -> elfEntry.sum() }
             .sortedDescending()
             .take(n)
