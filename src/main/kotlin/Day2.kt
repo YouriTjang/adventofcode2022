@@ -28,34 +28,53 @@ class Day2 {
 }
 
 data class Game(
-    val opponent: String, // A=Rock, B=Paper, C=Scissors
-    val me: String        // X=Rock, Y=Paper, Z=Scissors
+    val opponent: String,
+    val me: String
 ) {
-
+    companion object {
+        const val OPPONENT_ROCK = "A"
+        const val OPPONENT_PAPER = "B"
+        const val ROCK = "X"
+        const val PAPER = "Y"
+        const val SCISSORS = "Z"
+        private const val LOSE = 0
+        private const val DRAW = 3
+        private const val WIN = 6
+    }
 
     fun resultPoints() =
         when (opponent) {
-            "A" -> if (me == "X") 3 else if (me == "Y") 6 else 0
-            "B" -> if (me == "Y") 3 else if (me == "Z") 6 else 0
-            else -> if (me == "Z") 3 else if (me == "X") 6 else 0
+            OPPONENT_ROCK -> if (me == ROCK) DRAW else if (me == PAPER) WIN else LOSE
+            OPPONENT_PAPER -> if (me == PAPER) DRAW else if (me == SCISSORS) WIN else LOSE
+            else -> if (me == SCISSORS) DRAW else if (me == ROCK) WIN else LOSE
         }.plus(
             when (me) {
-                "X" -> 1
-                "Y" -> 2
+                ROCK -> 1
+                PAPER -> 2
                 else -> 3
             }
         )
 }
 
 data class GamePart2(
-    val opponent: String, // A=Rock, B=Paper, C=Scissors
-    val outcome: String   // X=Lose, Y=Draw, Z=Win
+    val opponent: String,
+    val outcome: String
 ) {
+    companion object {
+        private const val LOSE = "X"
+        private const val DRAW = "Y"
+        private const val OPPONENT_ROCK = "A"
+        private const val OPPONENT_PAPER = "B"
+        private const val ROCK = "X"
+        private const val PAPER = "Y"
+        private const val SCISSORS = "Z"
+    }
+
     fun pickMove(): String =
         when (opponent) {
-            "A" -> if (outcome == "X") "Z" else if (outcome == "Y") "X" else "Y"
-            "B" -> if (outcome == "X") "X" else if (outcome == "Y") "Y" else "Z"
-            else -> if (outcome == "X") "Y" else if (outcome == "Y") "Z" else "X"
+            OPPONENT_ROCK -> if (outcome == LOSE) PAPER else if (outcome == DRAW) ROCK else SCISSORS
+            OPPONENT_PAPER -> if (outcome == LOSE) ROCK else if (outcome == DRAW) SCISSORS else PAPER
+            else -> if (outcome == LOSE) SCISSORS else if (outcome == DRAW) PAPER else ROCK
         }
 
 }
