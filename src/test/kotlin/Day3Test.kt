@@ -43,5 +43,4 @@ class Day3Test {
         assertThat(Day3().getBadge(setOf("vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg"))).isEqualTo('r')
         assertThat(Day3().getBadge(setOf("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"))).isEqualTo('Z')
     }
-
 }
