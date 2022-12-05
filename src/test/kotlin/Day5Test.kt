@@ -84,6 +84,44 @@ move 1 from 2 to 1"""
         assertThat( Day5().applyInstruction(inputState, inputInstruction)).isEqualTo(expectedState)
     }
 
+    @Test
+    fun applyInstructionPart2Test1() {
+        val inputState = mapOf(
+            1 to ArrayDeque(listOf('Z', 'N')),
+            2 to ArrayDeque(listOf('M', 'C', 'D')),
+            3 to ArrayDeque(listOf('P'))
+        )
+
+        val inputInstruction = Instruction(1, 1, 2)
+
+        val expectedState = mapOf(
+            1 to ArrayDeque(listOf('Z')),
+            2 to ArrayDeque(listOf('M', 'C', 'D', 'N')),
+            3 to ArrayDeque(listOf('P'))
+        )
+
+        assertThat( Day5().applyInstructionPart2(inputState, inputInstruction)).isEqualTo(expectedState)
+    }
+
+    @Test
+    fun applyInstructionPart2Test2() {
+        val inputState = mapOf(
+            1 to ArrayDeque(listOf('Z', 'N')),
+            2 to ArrayDeque(listOf('M', 'C', 'D')),
+            3 to ArrayDeque(listOf('P'))
+        )
+
+        val inputInstruction = Instruction(2, 1, 2)
+
+        val expectedState = mapOf(
+            1 to ArrayDeque(listOf()),
+            2 to ArrayDeque(listOf('M', 'C', 'D', 'Z', 'N')),
+            3 to ArrayDeque(listOf('P'))
+        )
+
+        assertThat( Day5().applyInstructionPart2(inputState, inputInstruction)).isEqualTo(expectedState)
+    }
+
 
     @Test
     fun readTopContainersTest() {

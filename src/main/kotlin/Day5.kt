@@ -1,19 +1,29 @@
 fun main() {
-    println(Day5().part1("day5_data.txt".readFileDirectlyAsText()))
-    println(Day5().part2("day5_data.txt".readFileDirectlyAsText()))
+    println(Day5().part("day5_data.txt".readFileDirectlyAsText()) { acc, next ->
+        Day5().applyInstruction(
+            acc,
+            next
+        )
+    })
+    println(Day5().part("day5_data.txt".readFileDirectlyAsText()) { acc, next ->
+        Day5().applyInstructionPart2(
+            acc,
+            next
+        )
+    })
 }
 
 typealias State = Map<Int, ArrayDeque<Char>>
 
 class Day5 {
-    fun part1(text: String): String {
+    fun part(text: String, crameOperation: (State, Instruction) -> State): String {
         val splittedText = preprocessSplitHalves(text)
 
         val startState = parseTextFirstHalf(splittedText[0])
         val instructions = deconstructInstructions(splittedText[1])
 
         val endState = instructions
-            .fold(startState) { acc, next -> Day5().applyInstruction(acc, next) }
+            .fold(startState) { acc, next -> crameOperation(acc, next) }
 
         return readTopContainers(endState)
     }
@@ -36,7 +46,6 @@ class Day5 {
         }
         return result
     }
-
 
     private fun readStack(input: String, stack: Int, numberOfContainers: Int): ArrayDeque<Char> {
         val indices = generateSequence(1) { num -> num + 4 }.take(numberOfContainers).toList()
@@ -72,13 +81,22 @@ class Day5 {
         return state
     }
 
+    fun applyInstructionPart2(state: State, instruction: Instruction): State {
+        var sourceStack = state[instruction.source]!!
+        val targetStack = state[instruction.target]!!
+
+        val temp = mutableListOf<Char>()
+        for (n in 1..instruction.count) {
+            val container = sourceStack.removeLast()
+            temp.add(container)
+        }
+        targetStack.addAll(temp.reversed())
+        return state
+    }
+
     fun readTopContainers(state: State): String =
         state.map { it.value.last() }
             .joinToString(separator = "") { it.toString() }
-
-    fun part2(text: String): Int {
-        TODO()
-    }
 
 }
 
